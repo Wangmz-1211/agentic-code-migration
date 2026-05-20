@@ -46,7 +46,7 @@ graph TD
         CreatePlan -->|3. Generates| PlanDoc[migration-plan.md Table]
     end
 
-    subgraph Execution Phase (Batch Loop)
+    subgraph Execution_Phase_Batch_Loop
         Orchestrator -->|4. Dispatches Task via JSON| Executor[Executor / Executor Pro]
         Executor -->|5. Reads Rules| CustomSkill[Custom Skill / SKILL.md]
         Executor -->|6. Applies Localized Edits| TargetFile[(Target Source File)]
