@@ -84,6 +84,23 @@ graph TD
 
 
 ---
+## Design Rationale
+
+We designed this framework around three core engineering principles that prioritize correctness, repeatability, and efficient validation during large-scale code migrations.
+
+1. Shift effort left to reduce verification cost
+
+    - Empirical experience shows that most migration effort is consumed by testing, debugging, and verification, not by the initial edit. By improving the quality and precision of edits during the migration phase (smaller, more targeted changes, and stricter rule application), we reduce downstream validation cycles and rework. To operationalize this, the architecture embeds a `Validator` as a sub-agent of the `Executor` to form a tight edit→validate feedback loop that surfaces issues early and lowers overall iteration cost.
+
+2. Independent contexts with efficient handoff
+
+    - The `Validator` runs in an isolated execution context, separate from the `Executor`, to avoid self-assessment bias and to make validation reproducible and auditable. After validation completes, the `Validator` returns structured findings and minimal metadata to the `Executor`, enabling the `Executor` to resume corrective actions without re-collecting the entire task context. This handoff reduces redundant context gathering and accelerates repair cycles.
+
+3. Predictability through strict separation of privilege (an explicit trade-off)
+
+    - We enforce strict separation of responsibilities and access scopes across agents to ensure consistent, auditable behavior—important for reproducible automation. This constraint reduces agent flexibility, which is an intentional engineering trade-off: code migration is largely patterned work rather than open-ended creative synthesis. Constraining agent actions lowers reasoning complexity and improves repeatability, but increases the burden of context management when a codebase cannot be loaded into a single context. Operational mitigations—metadata contracts, chunked contexts, bounded retries, and explicit data contracts—help manage that complexity.
+
+Overall, the design favors predictability and verifiability over unconstrained flexibility, optimizing for scalable, repeatable migration workflows rather than ad-hoc exploratory edits.
 
 ## 📂 Project Structure & Skills
 
