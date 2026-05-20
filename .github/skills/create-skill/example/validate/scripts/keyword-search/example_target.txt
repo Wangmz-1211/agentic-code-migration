@@ -1,0 +1,7 @@
+This is an example target file.
+
+It contains TODO items and other markers.
+
+# TODO: implement feature X
+Some code notes: FIXME this later.
+IMPORTANT: double-check the logic.

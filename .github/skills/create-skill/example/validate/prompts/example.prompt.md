@@ -1,0 +1,3 @@
+This is a example prompt file for the Validator agent to reference when performing a semantic based validation.
+
+The LLM-based Validator takes the responsibility of verifying assertions that are beyond the capabilities of traditional static analysis or build tools, such as semantic equivalence, API contract adherence, or non-trivial code patterns. The Validator is designed to be invoked by the Executor agent after it performs edits on the target file, and it returns a structured report indicating whether the validation passed, failed, or was inconclusive, along with any findings that can guide further action.
